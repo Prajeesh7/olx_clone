@@ -5,8 +5,8 @@ import { db } from './Firebase/config';
 import App from './App';
 
 ReactDOM.render(
-    <FirebaseContext.Provider value={db}>
-        <App />
-    </FirebaseContext.Provider>
+<FirebaseContext.Provider value={db}>
+<App />
+</FirebaseContext.Provider>
 
-    , document.getElementById('root'));
+, document.getElementById('root'));
