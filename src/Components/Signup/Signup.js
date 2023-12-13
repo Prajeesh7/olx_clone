@@ -127,7 +127,7 @@ export default function Signup() {
            {error?<span style={{color:'red'}}>{error}</span>:""}
           <button type='submit'>Signup</button>
         </form>
-        <Link to='/login'>Login</Link>
+        <Link to='/login' >Login</Link>
         {!complete?<span style={{color:'red'}}>all field is required</span>:""}
       </div>
     </div>
