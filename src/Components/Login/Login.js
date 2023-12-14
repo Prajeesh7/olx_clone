@@ -2,7 +2,7 @@ import React from 'react';
 import { useState,useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
-import {getAuth,signInWithEmailAndPassword} from 'firebase/auth'
+import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
 import Logo from '../../olx-logo.png';
 import './Login.css';
 
