@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -9,7 +9,7 @@ import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext } from '../../store/firebaseContext';
 
 function Header() {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -37,10 +37,10 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>{user ? user.displayName : 'Login'}</span>
+          <span>{user ? `Welcome ${user.displayName}` : 'Login'}</span>
           <hr />
         </div>
-
+        {user ? <span>Logout</span> : null}
         <div className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
