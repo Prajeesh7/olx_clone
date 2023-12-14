@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState,useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
 import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
 import Logo from '../../olx-logo.png';
@@ -18,7 +18,7 @@ function Login() {
     if ( email && password ){
       const auth = getAuth();
       signInWithEmailAndPassword(auth,email,password).then(()=>{
-        alert('loggin succesfull');
+        // alert('loggin succesfull');
         navigate('/');
       }).catch((error)=>{
         alert(error.message)
@@ -57,7 +57,7 @@ function Login() {
           <br />
           <button>Login</button>
         </form>
-        <a>Signup</a>
+        <Link to='/signup'>Signup</Link>
       </div>
     </div>
   );

@@ -7,9 +7,12 @@ import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext } from '../../store/firebaseContext';
+import { signOut, getAuth } from 'firebase/auth'
+import { useNavigate, Link } from 'react-router-dom'
 
 function Header() {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -40,7 +43,15 @@ function Header() {
           <span>{user ? `Welcome ${user.displayName}` : 'Login'}</span>
           <hr />
         </div>
-        {user ? <span>Logout</span> : null}
+        {user ? <span onClick={() => {
+          const auth = getAuth();
+          signOut(auth).then(() => {
+            setUser('');
+            navigate('/');
+          }).catch((err) => {
+            console.log('logout error' + err);
+          })
+        }} >Logout</span> : null}
         <div className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">

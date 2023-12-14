@@ -14,7 +14,7 @@ const {user,setUser}= useContext(AuthContext);
 
 
 useEffect(() => {
-  console.log(user);
+ // console.log(user);
   const auth = getAuth();
   onAuthStateChanged(auth,(user)=>{
     if(user){
