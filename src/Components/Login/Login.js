@@ -1,7 +1,6 @@
 import React from 'react';
-import { useState,useContext } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FirebaseContext } from '../../store/firebaseContext';
 import {getAuth,signInWithEmailAndPassword} from 'firebase/auth';
 import Logo from '../../olx-logo.png';
 import './Login.css';
@@ -10,12 +9,17 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const db = useContext(FirebaseContext);
+
 
   const HandleLogin = (e)=>{
     e.preventDefault()
     //console.log(email);
+
+
     if ( email && password ){
+
+      //-- Checking authentication 
+      
       const auth = getAuth();
       signInWithEmailAndPassword(auth,email,password).then(()=>{
         // alert('loggin succesfull');
@@ -28,7 +32,7 @@ function Login() {
   return (
     <div>
       <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt='Failed to fetching image'></img>
         <form onSubmit={HandleLogin}>
           <label htmlFor="fname">Email</label>
           <br />
