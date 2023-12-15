@@ -56,7 +56,9 @@ function Header() {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span onClick={()=>{
+              navigate('/create');
+            }}>SELL</span>
           </div>
         </div>
       </div>

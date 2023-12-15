@@ -22,7 +22,7 @@ const Create = () => {
   const submitHandler = ()=>{
     
     
-    if(name&&category&&price&&image){
+    if(name && category && price && image){
 
 
       const storage = getStorage();
@@ -125,3 +125,4 @@ const Create = () => {
 };
 
 export default Create;
+
