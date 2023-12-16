@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
 import { postContext } from '../../store/postContext';
 import { getDocs,collection} from 'firebase/firestore';
@@ -12,9 +13,10 @@ function Posts() {
   const [products, setProducts] = useState([]);
   const db = useContext(FirebaseContext);
   const {setPostDetails} = useContext(postContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    
+
     //-- Getting documents from firebase 
     getDocs(collection(db, 'products')).then((snapshot) => {
       const data = snapshot.docs.map(doc => {
@@ -47,6 +49,7 @@ function Posts() {
                 className="card"
                 onClick={()=>{
                   setPostDetails(obj)
+                  navigate('/view')
                 }}
               >
                 <div className="favorite">
