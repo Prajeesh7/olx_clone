@@ -162,12 +162,18 @@
     display: none;
   }
 }
-.log{
+.logout{
   cursor: pointer;
   color:black;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
 }
-.log:hover{
+.logout:hover{
   text-decoration: underline;
+}
+.login{
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: black;
 }

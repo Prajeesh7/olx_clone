@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { FirebaseContext } from '../../store/firebaseContext';
+import { postContext } from '../../store/postContext';
 import { getDocs,collection} from 'firebase/firestore';
 import Heart from '../../assets/Heart';
 import './Post.css';
@@ -10,12 +11,15 @@ function Posts() {
 
   const [products, setProducts] = useState([]);
   const db = useContext(FirebaseContext);
+  const {setPostDetails} = useContext(postContext);
 
   useEffect(() => {
+    
     //-- Getting documents from firebase 
     getDocs(collection(db, 'products')).then((snapshot) => {
       const data = snapshot.docs.map(doc => {
         return ({
+
           //--data() function will help to take datas from the collection 
           ...doc.data(),
           id: doc.id
@@ -37,10 +41,13 @@ function Posts() {
         <div className="cards">
 
 
-          {products.map(obj => {
+          { products.map(obj => {
             return (
               <div
                 className="card"
+                onClick={()=>{
+                  setPostDetails(obj)
+                }}
               >
                 <div className="favorite">
                   <Heart></Heart>

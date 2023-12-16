@@ -40,10 +40,10 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span className='log'>{ user ? `Welcome ${user.displayName}` : <Link to='/login'>Login</Link> }</span>
+          <span className='login'>{ user ? `Welcome ${user.displayName}` : <Link to='/login'>Login</Link> }</span>
           <hr />
         </div>
-        {user ? <span className='log' onClick={() => {
+        {user ? <span className='logout' onClick={() => {
           const auth = getAuth();
           signOut(auth).then(() => {
             setUser('');
