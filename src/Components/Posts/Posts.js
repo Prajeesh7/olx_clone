@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { FirebaseContext } from '../../store/firebaseContext';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs,collection} from 'firebase/firestore';
 import Heart from '../../assets/Heart';
 import './Post.css';
 
@@ -12,19 +12,20 @@ function Posts() {
   const db = useContext(FirebaseContext);
 
   useEffect(() => {
+    //-- Getting documents from firebase 
     getDocs(collection(db, 'products')).then((snapshot) => {
       const data = snapshot.docs.map(doc => {
-        return {
+        return ({
+          //--data() function will help to take datas from the collection 
           ...doc.data(),
           id: doc.id
-        }
+        })
       })
 
       setProducts(data);
 
     })
-  }, [])
-  //console.log(products)
+  })
 
   return (
     <div className="postParentDiv">

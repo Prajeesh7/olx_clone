@@ -164,4 +164,10 @@
 }
 .log{
   cursor: pointer;
+  color:black;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+}
+.log:hover{
+  text-decoration: underline;
 }
