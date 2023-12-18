@@ -2,7 +2,8 @@ import React, { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
 import { postContext } from '../../store/postContext';
-import { getDocs,collection} from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
+//import { searchContext } from '../../store/searchContext';
 import Heart from '../../assets/Heart';
 import './Post.css';
 
@@ -10,9 +11,11 @@ import './Post.css';
 
 function Posts() {
 
-  const [products, setProducts] = useState([]);
+  const [ products,setProducts ] = useState([]);
+  const [filterProduct, setFilterProduct] = useState([]);
   const db = useContext(FirebaseContext);
-  const {setPostDetails} = useContext(postContext);
+  const { setPostDetails } = useContext(postContext);
+  //const { searchProduct } = useContext(searchContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,9 +32,32 @@ function Posts() {
       })
 
       setProducts(data);
+      setFilterProduct(products);
 
     })
   })
+
+ useEffect(() => {
+
+  const searchText = "Nokia"
+
+  if (searchText){
+    console.log('hello')
+    const filter = products.filter((product) => {
+      return product?.name?.toLowerCase()?.includes(searchText.toLowerCase()) ||
+      product?.category?.toLowerCase()?.includes(searchText.toLowerCase()) 
+    });
+  
+    setFilterProduct(filter);
+    console.log('checking...')
+  }else{
+
+    setFilterProduct(products);
+    console.log('checking...else')
+  }
+  
+
+ },[])
 
   return (
     <div className="postParentDiv">
@@ -43,11 +69,11 @@ function Posts() {
         <div className="cards">
 
 
-          { products.map(obj => {
+          { filterProduct.map(obj => {
             return (
               <div
                 className="card"
-                onClick={()=>{
+                onClick={() => {
                   setPostDetails(obj)
                   navigate('/view')
                 }}

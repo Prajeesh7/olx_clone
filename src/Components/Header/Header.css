@@ -170,6 +170,7 @@
 }
 .logout:hover{
   text-decoration: underline;
+  color: blue;
 }
 .login{
   cursor: pointer;

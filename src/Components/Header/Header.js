@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useState } from 'react';
 
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
@@ -7,12 +7,24 @@ import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext } from '../../store/firebaseContext';
+//import { searchContext } from '../../store/searchContext';
 import { signOut, getAuth } from 'firebase/auth'
 import { useNavigate, Link } from 'react-router-dom'
 
+
+
+
+
+
 function Header() {
+
   const { user, setUser } = useContext(AuthContext);
+  const [searchProduct,setSearchProduct] = useState('')
+  //const {searchProduct,setSearchProduct} = useContext(searchContext);
   const navigate = useNavigate();
+
+
+
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -26,10 +38,15 @@ function Header() {
         </div>
         <div className="productSearch">
           <div className="input">
+
             <input
               type="text"
               placeholder="Find car,mobile phone and more..."
+              onChange={(e)=>{
+                setSearchProduct(e.target.value);
+              }}
             />
+
           </div>
           <div className="searchAction">
             <Search color="#ffffff"></Search>

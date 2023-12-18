@@ -14,7 +14,7 @@ function View() {
     const q = query(collection(db, "users"), where("id", "==",userId));
      getDocs(q).then(snapshot=>{
       snapshot.forEach((doc) => {
-        
+
         setUserDetails(doc.data())
       });
       
@@ -41,8 +41,9 @@ function View() {
         </div>
         {userDetails&&
          <div className="contactDetails">
-          <p>{userDetails?.name}</p>
-          <p>{userDetails?.phone}</p>
+          <h4>Seller Details</h4>
+          <p>Name : {userDetails?.name}</p>
+          <p>Phone : {userDetails?.phone}</p>
           <p></p>
           </div>
             }
