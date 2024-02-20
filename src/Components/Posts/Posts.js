@@ -63,7 +63,7 @@ function Posts() {
     <div className="postParentDiv">
       <div className="moreView">
         <div className="heading">
-          <span>Quick Menu</span>
+          <span>Popular Brands</span>
           <span>View more</span>
         </div>
         <div className="cards">

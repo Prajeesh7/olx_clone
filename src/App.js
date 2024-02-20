@@ -19,16 +19,18 @@ function App() {
     // console.log(user);
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
+
       if (user) {
         setUser(user);
       } else {
-        console.log('User not found');
+        console.log('User not found'); 
       }
     })
 
   })
 
   return (
+
     <div>
       <Post>
         <BrowserRouter>
