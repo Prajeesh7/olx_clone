@@ -1,17 +1,14 @@
-import React, { useEffect, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FirebaseContext } from '../../store/firebaseContext';
-import { postContext } from '../../store/postContext';
-import { getDocs, collection } from 'firebase/firestore';
+import React, { useEffect, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FirebaseContext } from "../../store/firebaseContext";
+import { postContext } from "../../store/postContext";
+import { getDocs, collection } from "firebase/firestore";
 //import { searchContext } from '../../store/searchContext';
-import Heart from '../../assets/Heart';
-import './Post.css';
-
-
+import Heart from "../../assets/Heart";
+import "./Post.css";
 
 function Posts() {
-
-  const [ products,setProducts ] = useState([]);
+  const [products, setProducts] = useState([]);
   const [filterProduct, setFilterProduct] = useState([]);
   const db = useContext(FirebaseContext);
   const { setPostDetails } = useContext(postContext);
@@ -19,45 +16,40 @@ function Posts() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    //-- Getting documents from firebase 
-    getDocs(collection(db, 'products')).then((snapshot) => {
-      const data = snapshot.docs.map(doc => {
-        return ({
-
-          //--data() function will help to take datas from the collection 
+    //-- Getting documents from firebase
+    getDocs(collection(db, "products")).then((snapshot) => {
+      const data = snapshot.docs.map((doc) => {
+        return {
+          //--data() function will help to take datas from the collection
           ...doc.data(),
-          id: doc.id
-        })
-      })
+          id: doc.id,
+        };
+      });
 
       setProducts(data);
       setFilterProduct(products);
-
-    })
-  })
-
- useEffect(() => {
-
-  const searchText = "Nokia"
-
-  if (searchText){
-    console.log('hello')
-    const filter = products.filter((product) => {
-      return product?.name?.toLowerCase()?.includes(searchText.toLowerCase()) ||
-      product?.category?.toLowerCase()?.includes(searchText.toLowerCase()) 
     });
-  
-    setFilterProduct(filter);
-    console.log('checking...')
-  }else{
+  });
 
-    setFilterProduct(products);
-    console.log('checking...else')
-  }
-  
+  useEffect(() => {
+    const searchText = "Nokia";
 
- },[])
+    if (searchText) {
+      console.log("hello");
+      const filter = products.filter((product) => {
+        return (
+          product?.name?.toLowerCase()?.includes(searchText.toLowerCase()) ||
+          product?.category?.toLowerCase()?.includes(searchText.toLowerCase())
+        );
+      });
+
+      setFilterProduct(filter);
+      console.log("checking...");
+    } else {
+      setFilterProduct(products);
+      console.log("checking...else");
+    }
+  }, []);
 
   return (
     <div className="postParentDiv">
@@ -67,15 +59,13 @@ function Posts() {
           <span>View more</span>
         </div>
         <div className="cards">
-
-
-          { filterProduct.map(obj => {
+          {filterProduct.map((obj) => {
             return (
               <div
                 className="card"
                 onClick={() => {
-                  setPostDetails(obj)
-                  navigate('/view')
+                  setPostDetails(obj);
+                  navigate("/view");
                 }}
               >
                 <div className="favorite">
@@ -93,10 +83,8 @@ function Posts() {
                   <span>{obj.date}</span>
                 </div>
               </div>
-            )
+            );
           })}
-
-
         </div>
       </div>
       <div className="recommendations">

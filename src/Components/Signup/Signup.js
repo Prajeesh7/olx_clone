@@ -1,71 +1,65 @@
-import React, { useState ,useContext} from 'react';
-import Logo from '../../olx-logo.png';
-import './Signup.css';
-import { Link } from 'react-router-dom';
-import {FirebaseContext} from '../../store/firebaseContext'
-import { getAuth, createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore"; 
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState, useContext } from "react";
+import Logo from "../../olx-logo.png";
+import "./Signup.css";
+import { Link } from "react-router-dom";
+import { FirebaseContext } from "../../store/firebaseContext";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { collection, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-
-  const[userName,setUserName] = useState('')
-  const [email,setEmail] = useState('')
-  const[phone,setPhone] = useState('')
-  const [password,setPassword] = useState('')
-  const db= useContext(FirebaseContext)
-  const [complete,setComplete] = useState(true) 
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const db = useContext(FirebaseContext);
+  const [complete, setComplete] = useState(true);
   const navigate = useNavigate();
-  const [error,setError] = useState('')
+  const [error, setError] = useState("");
 
-  function HandleSubmit(e){
-    e.preventDefault()
+  function HandleSubmit(e) {
+    e.preventDefault();
 
-    if(userName && email && phone && password){
+    if (userName && email && phone && password) {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          const user = userCredential.user;
+          //  console.log(user);
+          await updateProfile(user, { displayName: userName });
 
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-    const user = userCredential.user;
-    //  console.log(user);
-     await updateProfile(user,{displayName: userName});
+          try {
+            const docRef = await addDoc(collection(db, "users"), {
+              id: user.uid,
+              name: userName,
+              phone: phone,
+            });
 
-    try {
-      const docRef = await addDoc(collection(db, "users"),
-       {
-       id:user.uid, 
-       name:userName,
-       phone:phone
-      });
-
-      if(docRef){
-       
-        navigate('/login')
-      }
-      
-    } catch (e) {
-      console.error("Error adding document: ", e);
+            if (docRef) {
+              navigate("/login");
+            }
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode + ":" + errorMessage);
+          setError(errorCode);
+        });
+    } else {
+      setComplete(false);
     }
-
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode + ":" +errorMessage);
-    setError(errorCode)
-  });
-}else{
-
-  setComplete(false)
-
-}
-
-
   }
   return (
     <div>
       <div className="signupParentDiv">
-        <img width="300px" height="300px" src={Logo} alt=''></img>
+        <img width="300px" height="300px" src={Logo} alt=""></img>
         <form onSubmit={HandleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
@@ -74,10 +68,10 @@ export default function Signup() {
             type="text"
             id="fname"
             name="name"
-            placeholder='enter name'
+            placeholder="enter name"
             value={userName}
-            onChange={(e)=>{
-              setUserName(e.target.value)
+            onChange={(e) => {
+              setUserName(e.target.value);
             }}
           />
           <br />
@@ -88,12 +82,11 @@ export default function Signup() {
             type="email"
             id="fname"
             name="email"
-            placeholder='enter email'
+            placeholder="enter email"
             value={email}
-            onChange={(e) =>{
-              setEmail(e.target.value)
+            onChange={(e) => {
+              setEmail(e.target.value);
             }}
-
           />
           <br />
           <label htmlFor="lname">Phone</label>
@@ -104,9 +97,8 @@ export default function Signup() {
             id="lname"
             name="phone"
             value={phone}
-            onChange={(e)=>{
+            onChange={(e) => {
               setPhone(e.target.value);
-
             }}
           />
           <br />
@@ -118,17 +110,21 @@ export default function Signup() {
             id="lname"
             name="password"
             value={password}
-            onChange={(e)=>{
+            onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
           <br />
           <br />
-           {error?<span style={{color:'red'}}>{error}</span>:""}
-          <button type='submit'>Signup</button>
+          {error ? <span style={{ color: "red" }}>{error}</span> : ""}
+          <button type="submit">Signup</button>
         </form>
-        <Link to='/login' >Login</Link>
-        {!complete?<span style={{color:'red'}}>all field is required</span>:""}
+        <Link to="/login">Login</Link>
+        {!complete ? (
+          <span style={{ color: "red" }}>all field is required</span>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
